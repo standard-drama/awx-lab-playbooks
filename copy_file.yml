@@ -1,0 +1,12 @@
+---
+- name: Copy MOTD to all hosts
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy motd file
+      ansible.builtin.copy:
+        src: motd.txt
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'

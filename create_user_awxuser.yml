@@ -1,0 +1,10 @@
+---
+- name: Create user "awxuser"
+  hosts: all
+  become: true
+  tasks:
+    - name: Create a new user
+      ansible.builtin.user:
+        name: awxuser
+        shell: /bin/bash
+        state: present

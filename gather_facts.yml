@@ -1,0 +1,9 @@
+---
+- name: Gather facts and print hostname
+  hosts: all
+  tasks:
+    - name: Gather facts
+      ansible.builtin.setup:
+    - name: Print hostname
+      ansible.builtin.debug:
+        var: ansible_hostname

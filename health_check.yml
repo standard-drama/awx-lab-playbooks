@@ -1,0 +1,39 @@
+---
+- name: VM Health Check
+  hosts: all
+  become: true
+  tasks:
+    - name: Gather facts
+      ansible.builtin.setup:
+
+    - name: Print hostname
+      ansible.builtin.debug:
+        msg: "Hostname: {{ ansible_hostname }}"
+
+    - name: Print CPU information
+      ansible.builtin.debug:
+        msg: "CPU(s): {{ ansible_processor_cores | default(ansible_processor_count) }} - {{ ansible_processor }}"
+
+    - name: Print memory information
+      ansible.builtin.debug:
+        msg: "Memory (MB): {{ ansible_memtotal_mb }}"
+
+    - name: Print disk space usage
+      ansible.builtin.shell: df -h /
+      register: disk_usage
+
+    - name: Show disk usage
+      ansible.builtin.debug:
+        var: disk_usage.stdout_lines
+
+    - name: Print uptime
+      ansible.builtin.shell: uptime
+      register: uptime
+
+    - name: Show uptime
+      ansible.builtin.debug:
+        var: uptime.stdout
+
+    - name: Print network interfaces
+      ansible.builtin.debug:
+        var: ansible_interfaces
